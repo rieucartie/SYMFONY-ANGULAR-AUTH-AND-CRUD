@@ -1,0 +1,9 @@
+<app-navbar></app-navbar>
+
+<div class="container pt-5">
+  <div class="alert alert-info" *ngIf="isLoading">
+    En attente  ...
+  </div>
+
+  <router-outlet></router-outlet>
+</div>

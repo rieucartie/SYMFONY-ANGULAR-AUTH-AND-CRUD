@@ -1,0 +1,49 @@
+#enable_authenticator_manager: true
+security:
+  # https://symfony.com/doc/current/security.html#c-hashing-passwords
+  password_hashers:
+    Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+  # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+  providers:
+    # used to reload user from session & other features (e.g. switch_user)
+    app_user_provider:
+      entity:
+        class: App\Entity\User
+        property: email
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+
+    login:
+      pattern: ^/api/login
+      stateless: true
+      json_login:
+        check_path: /api/login_check
+        username_path: email
+        password_path: password
+        success_handler: lexik_jwt_authentication.handler.authentication_success
+        failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+    api:
+      pattern:   ^/api
+      stateless: true
+      jwt: ~
+      lazy: true
+      provider: app_user_provider
+
+  access_control:
+
+#    - {
+#        path: ^/api/users,
+#        methods: [POST],
+#        roles: IS_AUTHENTICATED_ANONYMOUSLY,
+#      }
+    - { path: ^/api/users, methods: [PUT, DELETE, GET], roles: ROLE_USER }
+    - { path: ^/api/articles, methods: [PUT, DELETE, GET,POST], roles: ROLE_USER }
+    - { path: ^/api/login, roles: PUBLIC_ACCESS }
+    - { path: ^/api,       roles: PUBLIC_ACCESS }
+    # - { path: ^/admin, roles: ROLE_ADMIN }
+    # - { path: ^/profile, roles: ROLE_USER }
+

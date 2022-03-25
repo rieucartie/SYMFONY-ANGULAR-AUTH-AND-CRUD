@@ -1,0 +1,31 @@
+<h1>Les articles</h1>
+<hr>
+<form [formGroup]="this.crudApi.formData" (ngSubmit)="onSubmit()">
+  <input type="hidden" formControlName="id" id="id">
+  <div class="form-group">
+    <label>Titre </label>
+    <input type="text" class="form-control" formControlName="title" id="title">
+  </div>
+  <div class="form-group">
+    <label>Contenu</label>
+    <input type="text" class="form-control" formControlName="content" id="content" placeholder="content article">
+  </div>
+  <div class="form-group">
+    <label>Slug</label>
+    <input type="text" class="form-control" formControlName="slug" id="slug" placeholder="slug article">
+  </div>
+  <div class="form-group col-md-4">
+    <label>Categorie : </label>
+    <select class="form-control" formControlName="category" id="category"
+            (change)="onChange($event)">
+      <option value="0">-Select-</option>
+      <option *ngFor="let item of CategoryService.list"
+              value="{{item.id}}">{{item.name }} {{item.content}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-dark"><i class="fa fa-database"></i> Sauvegarder</button>
+    <button type="button" class="btn btn-outline-dark ml-1" [mat-dialog-close]><i class="fa fa-close"></i> Fermer
+    </button>
+  </div>
+</form>

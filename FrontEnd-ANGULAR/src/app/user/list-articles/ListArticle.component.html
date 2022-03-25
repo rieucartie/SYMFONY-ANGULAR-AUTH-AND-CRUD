@@ -1,0 +1,38 @@
+<div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-responsive-sm table-responsive-md
+   table-responsive-lg">
+            <thead>
+                <tr>
+                    <th class="text-center"  scope="col">titre</th>
+                    <th class="text-center" scope="col">contenu </th>
+                   <th class="text-center" scope="col">categorie</th>
+                    <th class="text-center" scope="col">Modifier</th>
+                  <th class="text-center" scope="col">Supprimer</th>
+                  <th>
+                    <a class="btn btn-outline-success" (click)="addArticles()">
+                      <i class="fa fa-plus-square"></i> Creer nouveau article</a>
+                  </th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+
+            <tr *ngFor="let item of crudApi.list| mapToIterable   ;let i=index; ">
+              <td class="text-center">{{item.value.title}}</td>
+              <td class="text-center">{{item.value.content}}</td>
+              <td class="text-center">{{item.value.category.name}}</td>
+
+                <td class="text-center"><button class="btn btn-warning" (click)="selectData(item.value)">
+                  <i class="fa fa-pencil-square-o">Modifier</i></button>
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-danger" (click)="removeData(item.value.id)">
+                  <i class="fa fa-trash-o">Supprimer</i></button>
+                </td>
+               </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
